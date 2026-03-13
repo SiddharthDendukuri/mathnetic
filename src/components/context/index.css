@@ -45,6 +45,8 @@ body {
   cursor: grab;
   font-size: 40px;
   background-color: burlywood;
+  position: absolute;
+  z-index: 999;
 }
 
 .dndflow .dndnode.input {

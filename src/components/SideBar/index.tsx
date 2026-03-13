@@ -18,22 +18,25 @@ interface DraggableNodeProps {
   onDrop: (nodeType: string, latexEq: string, position: XYPosition) => void;
 }
 
- 
+let dnid = 0;
 function DraggableNode({ className, children, nodeType, latexEq, onDrop }: DraggableNodeProps) {
   const draggableRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<XYPosition>({ x: 0, y: 0 });
+  const [position, setPosition] = useState<XYPosition>({ x: 0, y: dnid*50 });
+  dnid++;
+  console.log(dnid);
  
   useDraggable(draggableRef, {
     position: position,
     onDrag: ({ offsetX, offsetY }) => {
       // Calculate position relative to the viewport
+
       setPosition({
         x: offsetX,
         y: offsetY,
       });
     },
     onDragEnd: ({ event }) => {
-      setPosition({ x: 0, y: 0 });
+      setPosition({ x: 0, y: dnid*50 });
       onDrop(nodeType, latexEq, {
         x: event.clientX,
         y: event.clientY,
@@ -42,7 +45,7 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
   });
   return (
     
-    <div className='dndnode' ref={draggableRef}>
+    <div className='dndnode' ref={draggableRef} >
           <InlineMath math={latexEq}/>
     </div>
   );
