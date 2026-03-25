@@ -45,8 +45,6 @@ body {
   cursor: grab;
   font-size: 40px;
   background-color: burlywood;
-  position: absolute;
-  z-index: 999;
 }
 
 .dndflow .dndnode.input {
@@ -60,7 +58,6 @@ body {
 .dndflow .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
-  z-index: -1;
 }
 
 .dndflow .selectall {

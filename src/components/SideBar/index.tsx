@@ -21,7 +21,7 @@ interface DraggableNodeProps {
 let dnid = 0;
 function DraggableNode({ className, children, nodeType, latexEq, onDrop }: DraggableNodeProps) {
   const draggableRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<XYPosition>({ x: 0, y: dnid*50 });
+  const [position, setPosition] = useState<XYPosition>({ x: 0, y: 0 });
   dnid++;
   console.log(dnid);
  
@@ -36,7 +36,7 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
       });
     },
     onDragEnd: ({ event }) => {
-      setPosition({ x: 0, y: dnid*50 });
+      setPosition({ x: 0, y:0 });
       onDrop(nodeType, latexEq, {
         x: event.clientX,
         y: event.clientY,
@@ -97,7 +97,8 @@ export default function Sidebar() {
           <DraggableNode children="c" nodeType="arithmetic" latexEq='\\times' onDrop={handleNodeDrop} />
           <DraggableNode children="c" nodeType="arithmetic" latexEq='\\div' onDrop={handleNodeDrop} />
           <DraggableNode children="c" nodeType="arithmetic" latexEq='=' onDrop={handleNodeDrop} />
-          <DraggableNode children="c" nodeType="arithmetic" latexEq='\\pm' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="arithmetic" latexEq='\\pm' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="fraction" latexEq='-' onDrop={handleNodeDrop} />
 
 
           </div>
