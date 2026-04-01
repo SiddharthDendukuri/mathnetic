@@ -1,7 +1,5 @@
 @import url('../../../xy-theme.css');
 
-
-
 html,
 body {
   margin: 0;
@@ -17,6 +15,7 @@ body {
 .dndflow {
   flex-direction: column;
   display: flex;
+  position: fixed;
   flex-grow: 1;
   height: 100%;
 }
@@ -45,6 +44,11 @@ body {
   cursor: grab;
   font-size: 40px;
   background-color: burlywood;
+}
+
+.dndflow .dndnode.is-dragging {
+    background-color: green;
+    display: fixed;
 }
 
 .dndflow .dndnode.input {

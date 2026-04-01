@@ -657,10 +657,10 @@ const Flow = () => {
   // Sidebar is at the top to pass contexts to the whole component. The React Flow component includes the viewport and all nodes/edges/connections. 
   // Within the React Flow component, we pass everything we created before in as features of the component. Below the React Flow component are various other React Flow and JS features and the Output Pane
   return (
-      <div className="dndflow">
+      <div className="dndflow" id = 'dndflow'>
        <Sidebar />
        <div className="reactflow-wrapper" ref={reactFlowWrapper}>  
-        <ReactFlow                                   
+        <ReactFlow id = 'reactflow'                                  
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
