@@ -22,23 +22,27 @@ interface DraggableNodeProps {
 
 let dnid = 0;
 function DraggableNode({ className, children, nodeType, latexEq, onDrop }: DraggableNodeProps) {
-  const draggableRef = useRef<HTMLDivElement>(null);
+    const draggableRef = useRef<HTMLDivElement>(null);
+    const dragStarted = useRef(false);
   const [position, setPosition] = useState<XYPosition>({ x: 0, y: 0 });
   dnid++;
-  console.log(dnid);
  
   useDraggable(draggableRef, {
     position: position,
     onDrag: ({ offsetX, offsetY }) => {
       // Calculate position relative to the viewport
         let draggedNode = document.getElementById(String(latexEq));
-        let dndflow = document.getElementById('dndflow');
-        const absY = draggedNode.getBoundingClientRect().top;
-        draggedNode.classList.add('is-dragging');
-        dndflow.appendChild(draggedNode);
-        draggedNode.style.top = String(absY) + "px";
-        const dragEv = new CustomEvent("draggableNodeAdded", {detail: { id: latexEq }});
-
+        if (draggedNode.getAttribute("beingDragged") == "false")
+        {
+            let dndflow = document.getElementById('dndflow');
+            const absY = draggedNode.getBoundingClientRect().top;
+            draggedNode.classList.add('is-dragging');
+            dndflow.appendChild(draggedNode);
+            draggedNode.style.top = String(absY) + "px";
+            draggedNode.setAttribute("beingDragged", "true");
+            console.log("dragging!!!");
+            const dragEv = new CustomEvent("draggableNodeAdded", { detail: { id: latexEq } });
+        }
       setPosition({
         x: offsetX,
         y: offsetY,
@@ -53,6 +57,8 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
         else
             mySidebar.insertBefore(draggedNode, document.getElementById(latexEqs[latexEqs.indexOf(latexEq) + 1]));
         draggedNode.style.top = "0px";
+        draggedNode.setAttribute("beingDragged", "false");
+        console.log("dropped!!!")
       setPosition({ x: 0, y:0 });
       onDrop(nodeType, latexEq, {
         x: event.clientX,
@@ -61,7 +67,7 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
     },
   });
   return (
-    <div className='dndnode' id={String(latexEq)} ref={draggableRef} >
+      <div className='dndnode' id={String(latexEq)} ref={draggableRef} beingDragged="false" >
         <InlineMath math={latexEq}/>
     </div>
   );
