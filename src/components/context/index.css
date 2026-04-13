@@ -15,13 +15,13 @@ body {
 .dndflow {
   flex-direction: column;
   display: flex;
-  position: fixed;
   flex-grow: 1;
   height: 100%;
 }
 
 .dndflow aside {
   border-right: 1px solid #eee;
+  display: flex;
   padding: 15px 10px;
   font-size: 12px;
   background: #fcfcfc;
@@ -39,6 +39,7 @@ body {
   border-radius: 2px;
   margin-bottom: 10px;
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   cursor: grab;
@@ -49,6 +50,7 @@ body {
 .dndflow .dndnode.is-dragging {
     background-color: green;
     display: fixed;
+    position: fixed;
 }
 
 .dndflow .dndnode.input {

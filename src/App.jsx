@@ -644,13 +644,13 @@ const Flow = () => {
 
   document.addEventListener("drop", onDrop);
 
-  const onDragStart = (event, nodeType, nodeLatexEq) => { 
-    setType(nodeType);                                     
-    setLatexEq(nodeLatexEq);
-    event.dataTransfer.setData('text/plain', nodeType);
-    event.dataTransfer.setData('text/plain', nodeLatexEq);
-    event.dataTransfer.effectAllow = 'move';
-  };
+  //const onDragStart = (event, nodeType, nodeLatexEq) => { 
+  //  setType(nodeType);                                     
+  //  setLatexEq(nodeLatexEq);
+  //  event.dataTransfer.setData('text/plain', nodeType);
+  //  event.dataTransfer.setData('text/plain', nodeLatexEq);
+  //  event.dataTransfer.effectAllow = 'move';
+  //};
 
   
   // Final return for <flow/>
@@ -669,7 +669,6 @@ const Flow = () => {
           onNodeDragStop={onNodeDragStop}
           onNodeClick = {onNodeClick}
           onDrop={onDrop}
-          onDragStart={onDragStart}
           onDragOver={onDragOver}
           ref={ref}
           onPaneClick={onPaneClick}

@@ -10,6 +10,8 @@ import { InlineMath } from 'react-katex';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
+const latexEqs = ['0','1','2','3','4','5','6','7','8','9'];
+
 interface DraggableNodeProps {
   className?: string;
   children: React.ReactNode;
@@ -29,10 +31,13 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
     position: position,
     onDrag: ({ offsetX, offsetY }) => {
       // Calculate position relative to the viewport
-        let draggedNode = document.getElementById('1');
+        let draggedNode = document.getElementById(String(latexEq));
         let dndflow = document.getElementById('dndflow');
+        const absY = draggedNode.getBoundingClientRect().top;
         draggedNode.classList.add('is-dragging');
         dndflow.appendChild(draggedNode);
+        draggedNode.style.top = String(absY) + "px";
+        const dragEv = new CustomEvent("draggableNodeAdded", {detail: { id: latexEq }});
 
       setPosition({
         x: offsetX,
@@ -40,11 +45,14 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
       });
     },
     onDragEnd: ({ event }) => {
-        let draggedNode = document.getElementById('1');
+        let draggedNode = document.getElementById(String(latexEq));
         let mySidebar = document.getElementById('sidebar');
         draggedNode.classList.remove('is-dragging');
-        mySidebar.appendChild(draggedNode);
-
+        if (latexEq == latexEqs[latexEqs.length - 1])
+            mySidebar.appendChild(draggedNode);
+        else
+            mySidebar.insertBefore(draggedNode, document.getElementById(latexEqs[latexEqs.indexOf(latexEq) + 1]));
+        draggedNode.style.top = "0px";
       setPosition({ x: 0, y:0 });
       onDrop(nodeType, latexEq, {
         x: event.clientX,
@@ -53,9 +61,8 @@ function DraggableNode({ className, children, nodeType, latexEq, onDrop }: Dragg
     },
   });
   return (
-    
-    <div className='dndnode' id = '1' ref={draggableRef} >
-          <InlineMath math={latexEq}/>
+    <div className='dndnode' id={String(latexEq)} ref={draggableRef} >
+        <InlineMath math={latexEq}/>
     </div>
   );
 }
@@ -89,16 +96,16 @@ export default function Sidebar() {
       <div className="sidebar" id = 'sidebar'>
         You can drag these nodes to the pane to create new nodes.
       
-          <DraggableNode children="c" nodeType="numeric" latexEq='0' onDrop={handleNodeDrop} />
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='1' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='2' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='3' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='4' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='5' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='6' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='7' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='8' onDrop={handleNodeDrop} />*/}
-          {/*<DraggableNode children="c" nodeType="numeric" latexEq='9' onDrop={handleNodeDrop} />*/}
+          <DraggableNode children="c" nodeType="numeric" latexEq='0' onDrop={handleNodeDrop}/>
+          <DraggableNode children="c" nodeType="numeric" latexEq='1' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='2' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='3' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='4' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='5' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='6' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='7' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='8' onDrop={handleNodeDrop} />
+          <DraggableNode children="c" nodeType="numeric" latexEq='9' onDrop={handleNodeDrop} />
           {/*<DraggableNode children="c" nodeType="numeric" latexEq='\\pi' onDrop={handleNodeDrop} />*/}
           {/*<DraggableNode children="c" nodeType="numeric" latexEq='e' onDrop={handleNodeDrop} />*/}
           {/*<DraggableNode children="c" nodeType="arithmetic" latexEq='+' onDrop={handleNodeDrop} />*/}
