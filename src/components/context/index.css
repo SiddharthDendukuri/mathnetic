@@ -53,6 +53,11 @@ body {
     position: fixed;
 }
 
+.dndflow .fillernode
+{
+    background-color: transparent;
+    border: hidden;
+}
 .dndflow .dndnode.input {
   border-color: #0041d0;
 }
