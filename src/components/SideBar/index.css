@@ -1,7 +1,9 @@
 .sidebar {
-    height: 150vh;
+    height: 100vh;
     background-color: aqua;
     overflow: scroll;
     z-index: 0;
+ 
+    
 }
 

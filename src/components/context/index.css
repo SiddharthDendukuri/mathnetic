@@ -51,6 +51,10 @@ body {
   border-color: #0041d0;
 }
 
+.dndflow {
+    position: relative;
+}
+
 .dndflow .dndnode.output {
   border-color: #ff0072;
 }
@@ -58,6 +62,7 @@ body {
 .dndflow .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
+  width: 100%;
 }
 
 .dndflow .selectall {

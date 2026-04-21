@@ -1,0 +1,13 @@
+.trashzone {
+    width: 100px;
+    height: 100px;
+    background: #ffcccc;
+    border: 2px dashed #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+}

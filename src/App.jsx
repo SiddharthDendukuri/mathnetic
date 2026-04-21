@@ -29,6 +29,9 @@ import { useDrop } from 'react-dnd';
 import Sidebar from './components/SideBar';
 import OutputPane from './components/OutputPane';
 import ContextMenu from './components/ContextMenu';
+import GhostNodePane from './components/GhostNodePane';
+import Trashcan from './components/TrashCan';
+import TrashZone from './components/TrashCan';
 
 import { TypeProvider, useType } from './components/context/TypeContext';
 import { LatexEqProvider, useLatexEq } from './components/context/LatexEqContext';
@@ -403,7 +406,21 @@ const Flow = () => {
  
   const onNodeDragStop = useCallback(
 
-      (_, node) => {
+      (ev, node) => {
+
+          const trash = ;
+          const rect = trash.getBoundingClientRect();
+          const { clientX, clientY } = ev;
+          const isInsideTrash =
+              clientX >= rect.left &&
+              clientX <= rect.right &&
+              clientY >= rect.top &&
+              clientY <= rect.bottom;
+          if (isInsideTrash) {
+              console.log("deleted node");
+              setNodes((nds) => nds.filter((n) => n.id !== node.id));
+          }
+
       const closeEdge = getClosestEdge(node); // finds closest edge
  
       setEdges((es) => {
@@ -656,41 +673,44 @@ const Flow = () => {
   // Final return for <flow/>
   // Sidebar is at the top to pass contexts to the whole component. The React Flow component includes the viewport and all nodes/edges/connections. 
   // Within the React Flow component, we pass everything we created before in as features of the component. Below the React Flow component are various other React Flow and JS features and the Output Pane
-  return (
-      <div className="dndflow">
-       <Sidebar />
-       <div className="reactflow-wrapper" ref={reactFlowWrapper}>  
-        <ReactFlow                                   
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onNodesDelete={onNodesDelete}
-          onEdgesChange={onEdgesChange}
-          onNodeDragStop={onNodeDragStop}
-          onNodeClick = {onNodeClick}
-          onDrop={onDrop}
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          ref={ref}
-          onPaneClick={onPaneClick}
-          onNodeContextMenu={onNodeContextMenu}
-          defaultEdgeOptions={defaultEdgeOptions}
-          selectionMode={SelectionMode.Partial}
-          nodeTypes={nodeTypes}
-          snapToGrid
-          fitView
-          className="reactflow-container"
-        >
-          <Panel position="top-center">Drag Blocks to Start Making Math!</Panel>
-          <MiniMap ariaLabel="Mathnetic Mini Map" pannable zoomable/>
-          <Controls />
-          <Background variant="dots" gap={12} size={1} />
-          {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
-        </ReactFlow>
-      </div>
-      <OutputPane groupNum={groupNum} rowNum={rowNum} colNum={colNum} />
-
-    </div>
+    return (
+      
+        <div className="dndflow">
+            <Sidebar />
+            
+          
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>  
+                <ReactFlow                                   
+                  nodes={nodes}
+                  edges={edges}
+                  onNodesChange={onNodesChange}
+                  onNodesDelete={onNodesDelete}
+                  onEdgesChange={onEdgesChange}
+                  onNodeDragStop={onNodeDragStop}
+                  onNodeClick = {onNodeClick}
+                  onDrop={onDrop}
+                  onDragStart={onDragStart}
+                  onDragOver={onDragOver}
+                  ref={ref}
+                  onPaneClick={onPaneClick}
+                  onNodeContextMenu={onNodeContextMenu}
+                  defaultEdgeOptions={defaultEdgeOptions}
+                  selectionMode={SelectionMode.Partial}
+                  nodeTypes={nodeTypes}
+                  snapToGrid
+                  fitView
+                  className="reactflow-container"
+                >
+                    <TrashZone />
+                  <Panel position="top-center">Drag Blocks to Start Making Math!</Panel>
+                  <Panel position="bottom-right">Trash</Panel>
+                  <Controls />
+                  <Background variant="dots" gap={12} size={1} />
+                  {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
+                </ReactFlow>
+            </div>
+            <OutputPane groupNum={groupNum} rowNum={rowNum} colNum={colNum} />
+          </div >
   );
 };
 

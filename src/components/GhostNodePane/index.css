@@ -1,0 +1,7 @@
+.ghostnodepane {
+    width:100%;
+    background-color: aqua;
+    overflow: visible;
+    pointer-events: none;
+    position:absolute;
+}
