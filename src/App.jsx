@@ -29,6 +29,7 @@ import { useDrop } from 'react-dnd';
 import Sidebar from './components/SideBar';
 import OutputPane from './components/OutputPane';
 import ContextMenu from './components/ContextMenu';
+import TrashButton from './components/DeleteButton';
 
 import { TypeProvider, useType } from './components/context/TypeContext';
 import { LatexEqProvider, useLatexEq } from './components/context/LatexEqContext';
@@ -67,7 +68,6 @@ const source2Types = ['numeric', 'latex', 'arithmetic', 'variable'];        //a 
 const target2Types = ['numeric', 'latex', 'arithmetic', 'variable'];//a list of nodes that can be connected to other nodes vertically     [ ]
                                                                                                                                        //  |
                                                                                                                                        // [X]
-
 // Variables to Track How Nodes Are Arranged
 let groupNum = 0;
 let rowNum = 0;
@@ -76,6 +76,9 @@ let colNum = 0;
 // Assign Unique ID to Every Node
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+
+// Assign a variable for when a clicked node should be deleted
+let isDeleting = false;
 
 // Proximity Connection Variables
 const MIN_DISTANCE = 200;
@@ -134,6 +137,10 @@ const Flow = () => {
     //this onNodeClick function handles custom click functionality for nodes (exponentnode)
     const onNodeClick = useCallback((event, node) => {
         console.log("Node clicked");
+        if (isDeleting) {
+            deleteElements({ nodes: [{ id: node.id }] });
+            return null;
+        }
                     //checks if you click an exponentnode and then you click a numeric or variable node to snap the exponentnode to the other node
         if (lastClicked.type == 'exponent' && (node.type == "numeric" || node.type == "variable")) { 
             
@@ -640,7 +647,19 @@ const Flow = () => {
       setNodes((nds) => nds.concat(newNode));   // Setting state of nodes to include the new node
   },
     [screenToFlowPosition, type, latexEq],      // dependencies for UseCallback()
-  );
+    );
+
+    const startOrStopDeleting = useCallback((event) => {
+        isDeleting = !isDeleting;
+        console.log("A " + isDeleting);
+    },
+        [screenToFlowPosition, type, latexEq],
+    );
+
+
+  document.addEventListener("trashClicked", startOrStopDeleting);
+
+
 
   document.addEventListener("drop", onDrop);
 
@@ -679,9 +698,9 @@ const Flow = () => {
           snapToGrid
           fitView
           className="reactflow-container"
-        >
+              >
+          <TrashButton />
           <Panel position="top-center">Drag Blocks to Start Making Math!</Panel>
-          <MiniMap ariaLabel="Mathnetic Mini Map" pannable zoomable/>
           <Controls />
           <Background variant="dots" gap={12} size={1} />
           {menu && <ContextMenu onClick={onPaneClick} {...menu} />}

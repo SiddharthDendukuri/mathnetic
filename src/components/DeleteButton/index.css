@@ -1,0 +1,13 @@
+.trashbutton {
+    width: 15vw;
+    height: 15vw;
+    border: 2px dashed #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 5vw;
+    right: 5vw;
+    z-index: 10;
+    cursor: pointer;
+}
