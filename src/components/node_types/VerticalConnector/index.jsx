@@ -3,6 +3,7 @@ import { Position, useStoreApi, useNodeConnections, useReactFlow, useNodesData }
 import CustomHandle from '../../CustomHandle';
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex';
+import './index.css';
 
 function VerticalConnector(props) {
 

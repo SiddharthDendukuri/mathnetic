@@ -35,7 +35,7 @@ export default (props) => {
                 const denominator = readEquation(getNode(currentNode.data.connectors.lower));
 
                 if (!(numerator && denominator))
-                    return '';
+                    return 'aaaa';
                 lineString += '\\frac{' + numerator + '}{'+denominator+'}';
             }
             //if (currentNode.type === 'connector')
@@ -75,7 +75,7 @@ export default (props) => {
     
     return (
         <aside className="output-pane print">
-            <div className="description">Output</div>
+            <div className="description"></div>
             <InlineMath math={equationString}/>
         </aside>
     );

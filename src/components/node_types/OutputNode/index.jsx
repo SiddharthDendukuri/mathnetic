@@ -54,7 +54,7 @@ function OutputNode(props) {
 
   return (
     <div className="output-node description">
-      <CustomHandle id={props.id + "_target1"} type="target" position={Position.Left} connectionCount={1}/>
+      <CustomHandle id={props.id + "_source1"} type="source" position={Position.Right} connectionCount={1}/>
       <div>Output: {equationString}</div>
       <button onClick={handleGetSequence}>Get Sequence</button>
     </div>

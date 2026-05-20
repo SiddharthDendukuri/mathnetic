@@ -61,11 +61,11 @@ const lowerConnectionTypes = ['test', 'fraction'];
 
 const source1Types = ['numeric', 'latex', 'arithmetic', 'variable', 'test','connector', 'fraction', 'start'];   //a list of node types that can connect to other nodes [X]->-[ ]
 const target1Types = ['numeric', 'latex', 'arithmetic', 'variable', 'test', 'fraction'];                        //a list of nodes that can be connected to [ ]->-[X]
-const source2Types = ['numeric', 'latex', 'arithmetic', 'variable'];        //a list of nodes that can connect to other nodes vertically  [X]
+const source2Types = [];                                                    //a list of nodes that can connect to other nodes vertically  [X]
                                                                                                                                        //  |
                                                                                                                                        // [ ]
 
-const target2Types = ['numeric', 'latex', 'arithmetic', 'variable'];//a list of nodes that can be connected to other nodes vertically     [ ]
+const target2Types = []                                            ;//a list of nodes that can be connected to other nodes vertically     [ ]
                                                                                                                                        //  |
                                                                                                                                        // [X]
 // Variables to Track How Nodes Are Arranged
@@ -84,8 +84,8 @@ let isDeleting = false;
 const MIN_DISTANCE = 200;
 
 // Constants to represent the position offsets of nodes that are tied to a parent node
-const LOWER_POSITION_REL = { x: -20, y: 100 };
-const UPPER_POSITION_REL = { x: -20, y: -80 };
+const LOWER_POSITION_REL = { x: 3, y: 80 };
+const UPPER_POSITION_REL = { x: 3, y: -80 };
 const EXP_POSITION_REL = { x: 50, y: -25 }
 
 const Flow = () => {
@@ -366,9 +366,13 @@ const Flow = () => {
 
   }, [edges.filter((e) => e.className !== 'temp').length]);  // The one dependency for this useCallback is the number of non-temporary edges
  
-
+  const updateFractionEvent = new Event('updateFraction');
   const onNodeDrag = useCallback(
-    (_, node) => {
+      (_, node) => {
+        console.log(node.id);
+          
+        document.dispatchEvent(updateFractionEvent);
+
         if (node.data.exponentConnection != '')   //moving exponent nodes with its coefficient
         {
             moveNode(node.data.exponentConnection, node.position.x + EXP_POSITION_REL.x, node.position.y + EXP_POSITION_REL.y);
@@ -685,6 +689,7 @@ const Flow = () => {
           onNodesChange={onNodesChange}
           onNodesDelete={onNodesDelete}
           onEdgesChange={onEdgesChange}
+          onNodeDrag={onNodeDrag}
           onNodeDragStop={onNodeDragStop}
           onNodeClick = {onNodeClick}
           onDrop={onDrop}

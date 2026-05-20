@@ -23,7 +23,7 @@ body {
   border-right: 1px solid #eee;
   display: flex;
   padding: 15px 10px;
-  font-size: 12px;
+  font-size: 50px;
   background: #fcfcfc;
 }
 
@@ -32,8 +32,8 @@ body {
 }
 
 .dndflow .dndnode {
-  height: 50px;
-  width: 50px;
+  height: 5vw;
+  width: 5vw;
   padding: 10px;
   border: 1px solid #1a192b;
   border-radius: 2px;

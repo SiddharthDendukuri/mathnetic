@@ -10,7 +10,7 @@ import { InlineMath } from 'react-katex';
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
-const latexEqs = ['0','1','2','3','4','5','6','7','8','9', '\\pi', 'e', '+', '-', '\\times', '\\div', '=', '\\pm', '--'];
+const latexEqs = ['0','1','2','3','4','5','6','7','8','9', '\\pi', 'e', '+', '-', '\\times', '\\div', '=', '\\pm', '--', '^2', '^3', 'x', 'y'];
 
 interface DraggableNodeProps {
   className?: string;
@@ -106,7 +106,8 @@ export default function Sidebar() {
     <aside>
       <div className="sidebar" id = 'sidebar'>
         You can drag these nodes to the pane to create new nodes.
-      
+
+          <DraggableNode children="c" nodeType="start" latexEq='->' onDrop={handleNodeDrop} />
           <DraggableNode children="c" nodeType="numeric" latexEq='0' onDrop={handleNodeDrop}/>
           <DraggableNode children="c" nodeType="numeric" latexEq='1' onDrop={handleNodeDrop} />
           <DraggableNode children="c" nodeType="numeric" latexEq='2' onDrop={handleNodeDrop} />
@@ -125,7 +126,11 @@ export default function Sidebar() {
           <DraggableNode children="c" nodeType="arithmetic" latexEq={'\\div'} onDrop={handleNodeDrop} />
           <DraggableNode children="c" nodeType="arithmetic" latexEq='=' onDrop={handleNodeDrop} />
           <DraggableNode children="c" nodeType="arithmetic" latexEq={'\\pm'} onDrop={handleNodeDrop} />
-          <DraggableNode children="c" nodeType="fraction" latexEq='--' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="fraction" latexEq='--' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="exponent" latexEq='^2' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="exponent" latexEq='^3' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="variable" latexEq='x' onDrop={handleNodeDrop} />
+              <DraggableNode children="c" nodeType="variable" latexEq='y' onDrop={handleNodeDrop} />
 
           <div className='dndnode fillernode' id="fillerNode"/>
       </div>

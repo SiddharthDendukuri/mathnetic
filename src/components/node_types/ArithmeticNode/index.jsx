@@ -26,10 +26,8 @@ function ArithmeticNode(props) {
   return (
     <div className="arithmetic-node">
       <CustomHandle id={props.id + "_target1"} type="target" position={Position.Left} connectionCount={1} />
-      <CustomHandle id={props.id + "_target2"} type="target" position={Position.Top} connectionCount={1} />
       <InlineMath>{props.data.value}</InlineMath>
       <CustomHandle id={props.id + "_source1"} type="source" position={Position.Right} connectionCount={1} />
-      <CustomHandle id={props.id + "_source2"} type="source" position={Position.Bottom} connectionCount={1} />
     </div>
   );
 }
